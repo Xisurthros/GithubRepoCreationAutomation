@@ -2,7 +2,7 @@ import sys
 from local.classes.helpers import Helpers
 
 if __name__ == '__main__':
-    helpers = Helpers(username='Xisurthros')
+    helpers = Helpers()
 
     runnable_functions = {
         "help": helpers.help,

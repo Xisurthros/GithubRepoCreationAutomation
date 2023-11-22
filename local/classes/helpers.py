@@ -1,14 +1,15 @@
+import os
 import json
 import requests
-from secrets import TOKEN
 
 
 class Helpers:
 
-    def __init__(self, username: str):
-        self.username = username
+    def __init__(self) -> None:
+        self.username = os.environ.get('GITHUB_USERNAME')
+        self.token = os.environ.get('GITHUB_TOKEN')
         self.headers = {
-            'Authorization': f'token {TOKEN}',
+            'Authorization': f'token {self.token}',
             'Content-Type': 'application/x-www-form-urlencoded',
         }
         self._base_url = 'https://api.github.com/'
@@ -83,7 +84,7 @@ class Helpers:
         :return:
         """
         data = requests.get(f'{self._url}{self.username}', headers=self.headers).json()
-        return [{f"{data['items'][i]['name']}": f"{data['items'][i]['ssh_url']}"} for i in range(len(data['items']))]
+        return [{f"{data['items'][i]['name']}": f"{data['items'][i]['clone_url']}"} for i in range(len(data['items']))]
 
     def make_repo(self, *args) -> dict:
         """
